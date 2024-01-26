@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Esercizio4_7_3 {
 
+    // abbb abb ab
     //seq = AB AAB AAAB AAAAB
     private static int N = 1;
     private static Semaphore semA = new Semaphore(N);
