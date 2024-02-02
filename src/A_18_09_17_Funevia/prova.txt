@@ -1,0 +1,45 @@
+        if( t == TURISTA_A_PIEDI){
+            entraPiedi.acquire();
+            System.out.println("Sale il turista a piedi: "+Thread.currentThread().getId());
+            mutex.acquire();
+            postiOccupati++;
+            viaggio=0;
+            idTuristi.add(Thread.currentThread().getId());
+
+            if (postiOccupati == POSTI) {
+                start.release();
+            }
+        }else{ //t == TURISTA_IN_BICI
+            entraBici.acquire();
+            System.out.println("Sale il turista in bici: "+Thread.currentThread().getId());
+            mutex.acquire();
+            viaggio=1;
+            postiOccupati++;
+            idTuristi.add(Thread.currentThread().getId());
+
+            if(postiOccupati == POSTI){
+                start.release();
+            }
+        }
+
+        if( t == TURISTA_A_PIEDI){
+            esciPiedi.acquire();
+            System.out.println("Cala");
+            mutex.acquire();
+            postiOccupati--;
+            idTuristi.remove(Thread.currentThread().getId());
+
+            if (postiOccupati==0) {
+                end.release();
+            }
+        }else{ // t == TUROSTA_IN_BICI
+            esciBici.acquire();
+            System.out.println("cala bici");
+            mutex.acquire();
+            postiOccupati--;
+            idTuristi.remove(Thread.currentThread().getId());
+
+            if (postiOccupati==0) {
+                end.release();
+            }
+        }
